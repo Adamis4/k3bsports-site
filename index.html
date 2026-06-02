@@ -7,7 +7,6 @@
   <meta name="description" content="Tailored performance management for top-echelon athletes. Take the free assessment and see if K3B is the right fit for your career.">
   <link rel="stylesheet" href="/css/global.css">
   <style>
-    /* ── Hero ── */
     .hero {
       min-height: 92vh;
       display: flex; flex-direction: column; justify-content: center;
@@ -68,8 +67,6 @@
       text-transform: uppercase; color: var(--text-dim);
       margin-top: 6px; display: block;
     }
-
-    /* ── Services ── */
     .services-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       border: 1px solid var(--border-gold); margin-top: 64px;
@@ -78,187 +75,66 @@
       padding: 44px 36px;
       border-right: 1px solid rgba(184,151,58,0.1);
       transition: background var(--transition);
-      cursor: default;
     }
     .service-card:last-child { border-right: none; }
     .service-card:hover { background: var(--dark2); }
     .svc-num {
       font-family: var(--font-display); font-size: 52px;
-      color: rgba(184,151,58,0.12); line-height: 1;
-      margin-bottom: 24px;
+      color: rgba(184,151,58,0.12); line-height: 1; margin-bottom: 24px;
     }
     .svc-title {
       font-size: 13px; font-weight: 600; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--text);
-      margin-bottom: 14px;
+      text-transform: uppercase; color: var(--text); margin-bottom: 14px;
     }
-    .svc-desc {
-      font-size: 13px; font-weight: 300; color: var(--text-muted);
-      line-height: 1.75;
-    }
+    .svc-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.75; }
     .svc-link {
       display: inline-block; margin-top: 24px;
       font-size: 10px; font-weight: 600; letter-spacing: 2px;
       text-transform: uppercase; color: var(--gold);
     }
-
-    /* ── Process ── */
     .process-section { background: var(--dark); }
-    .process-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 96px; align-items: start;
-    }
-    .process-steps { margin-top: 48px; }
-    .process-step {
-      display: flex; gap: 24px; padding: 28px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
+    .process-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
+    .process-step { display: flex; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
     .process-step:last-child { border-bottom: none; }
-    .ps-num {
-      font-family: var(--font-display); font-size: 36px;
-      color: rgba(184,151,58,0.2); line-height: 1; min-width: 44px;
-      padding-top: 2px;
-    }
-    .ps-title {
-      font-size: 12px; font-weight: 600; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--text); margin-bottom: 6px;
-    }
-    .ps-desc {
-      font-size: 13px; font-weight: 300; color: var(--text-muted);
-      line-height: 1.7;
-    }
-    .assess-card {
-      position: sticky; top: 100px;
-      background: var(--black);
-      border: 1px solid var(--border-gold);
-      padding: 48px 40px;
-      position: relative;
-    }
-    .assess-card::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 56px; height: 3px; background: var(--gold);
-    }
-    .assess-domains {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px; margin: 28px 0 36px;
-    }
-    .domain-pill {
-      font-size: 11px; font-weight: 400; letter-spacing: 0.5px;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      padding: 9px 14px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .domain-pill::before {
-      content: ''; width: 5px; height: 5px;
-      background: var(--gold); flex-shrink: 0;
-    }
-    .assess-note {
-      font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-      color: var(--text-dim); text-align: center; margin-top: 14px;
-    }
-
-    /* ── Why K3B ── */
-    .why-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 1px; margin-top: 64px;
-      background: var(--border);
-    }
-    .why-card {
-      background: var(--black); padding: 40px 36px;
-      transition: background var(--transition);
-    }
+    .ps-num { font-family: var(--font-display); font-size: 36px; color: rgba(184,151,58,0.2); line-height: 1; min-width: 44px; padding-top: 2px; }
+    .ps-title { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
+    .ps-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+    .assess-card { background: var(--black); border: 1px solid var(--border-gold); padding: 48px 40px; position: relative; }
+    .assess-card::before { content: ''; position: absolute; top: 0; left: 0; width: 56px; height: 3px; background: var(--gold); }
+    .assess-domains { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 28px 0 36px; }
+    .domain-pill { font-size: 11px; font-weight: 400; color: var(--text-muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 9px 14px; display: flex; align-items: center; gap: 8px; }
+    .domain-pill::before { content: ''; width: 5px; height: 5px; background: var(--gold); flex-shrink: 0; }
+    .assess-note { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); text-align: center; margin-top: 14px; }
+    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 64px; background: var(--border); }
+    .why-card { background: var(--black); padding: 40px 36px; transition: background var(--transition); }
     .why-card:hover { background: var(--dark); }
-    .why-icon {
-      width: 44px; height: 44px;
-      border: 1px solid var(--border-gold);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; font-size: 20px;
-    }
-    .why-title {
-      font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--text); margin-bottom: 10px;
-    }
-    .why-desc {
-      font-size: 13px; font-weight: 300; color: var(--text-muted);
-      line-height: 1.75;
-    }
-
-    /* ── CTA Banner ── */
-    .cta-banner {
-      background: var(--gold); padding: 72px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .cta-title {
-      font-family: var(--font-display); font-size: 52px;
-      letter-spacing: 2px; color: var(--black); line-height: 1;
-    }
-    .cta-sub {
-      font-size: 14px; font-weight: 300; color: rgba(0,0,0,0.6);
-      margin-top: 8px;
-    }
-    .btn-dark {
-      background: var(--black); color: var(--gold);
-      font-size: 11px; font-weight: 600; letter-spacing: 2px;
-      text-transform: uppercase; padding: 16px 40px;
-      border: none; cursor: pointer; white-space: nowrap;
-      transition: all var(--transition); text-decoration: none;
-      display: inline-block;
-    }
+    .why-icon { width: 44px; height: 44px; border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 20px; }
+    .why-title { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text); margin-bottom: 10px; }
+    .why-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.75; }
+    .cta-banner { background: var(--gold); padding: 72px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .cta-title { font-family: var(--font-display); font-size: 52px; letter-spacing: 2px; color: var(--black); line-height: 1; }
+    .cta-sub { font-size: 14px; font-weight: 300; color: rgba(0,0,0,0.6); margin-top: 8px; }
+    .btn-dark { background: var(--black); color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 16px 40px; border: none; cursor: pointer; white-space: nowrap; transition: all var(--transition); text-decoration: none; display: inline-block; }
     .btn-dark:hover { background: var(--dark); }
-
-    /* ── Footer ── */
-    .footer {
-      background: var(--dark); padding: 56px 48px 40px;
-      border-top: 1px solid var(--border-gold);
-    }
-    .footer-top {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 48px;
-    }
-    .footer-logo-block .logo-name {
-      font-family: var(--font-display); font-size: 28px;
-      letter-spacing: 4px; color: var(--gold); display: block;
-    }
-    .footer-logo-block .logo-sub {
-      font-size: 10px; font-weight: 400; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--text-dim); margin-top: 4px;
-    }
+    .footer { background: var(--dark); padding: 56px 48px 40px; border-top: 1px solid var(--border-gold); }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; }
+    .footer-logo-block .logo-sub { font-size: 10px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; display: block; }
     .footer-links { display: flex; gap: 64px; }
-    .footer-col h4 {
-      font-size: 10px; font-weight: 600; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 20px;
-    }
-    .footer-col a {
-      display: block; font-size: 13px; font-weight: 300;
-      color: var(--text-muted); margin-bottom: 12px;
-      transition: color var(--transition);
-    }
+    .footer-col h4 { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .footer-col a { display: block; font-size: 13px; font-weight: 300; color: var(--text-muted); margin-bottom: 12px; transition: color var(--transition); }
     .footer-col a:hover { color: var(--text); }
-    .footer-bottom {
-      border-top: 1px solid var(--border); padding-top: 28px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .footer-copy {
-      font-size: 11px; color: var(--text-dim); letter-spacing: 1px;
-    }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
     .footer-legal { display: flex; gap: 24px; }
-    .footer-legal a {
-      font-size: 11px; color: var(--text-dim);
-      transition: color var(--transition);
-    }
+    .footer-legal a { font-size: 11px; color: var(--text-dim); transition: color var(--transition); }
     .footer-legal a:hover { color: var(--text-muted); }
   </style>
 </head>
 <body>
 
-<!-- ── Navigation ── -->
 <nav class="nav">
   <a href="/index.html" class="nav-logo">
-    <div class="nav-logo-mark">K3B</div>
-    K3B SPORTS
+    <img src="/K3B LOGO OFFICIAL.png" alt="K3B Sports" style="height:38px; width:auto;">
   </a>
   <div class="nav-links">
     <a href="/index.html" class="active">Home</a>
@@ -272,7 +148,6 @@
   </div>
 </nav>
 
-<!-- ── Hero ── -->
 <section class="hero">
   <div class="hero-grid-line"></div>
   <div class="hero-eyebrow"><span></span>Elite Athlete Management</div>
@@ -283,26 +158,13 @@
     <a href="/pages/services.html" class="btn btn-outline btn-lg">Our Services</a>
   </div>
   <div class="hero-stats">
-    <div>
-      <span class="stat-val">26</span>
-      <span class="stat-lbl">Point Assessment</span>
-    </div>
-    <div>
-      <span class="stat-val">4</span>
-      <span class="stat-lbl">Life Domains</span>
-    </div>
-    <div>
-      <span class="stat-val">AI</span>
-      <span class="stat-lbl">Evaluation Engine</span>
-    </div>
-    <div>
-      <span class="stat-val">FREE</span>
-      <span class="stat-lbl">To Apply</span>
-    </div>
+    <div><span class="stat-val">26</span><span class="stat-lbl">Point Assessment</span></div>
+    <div><span class="stat-val">4</span><span class="stat-lbl">Life Domains</span></div>
+    <div><span class="stat-val">AI</span><span class="stat-lbl">Evaluation Engine</span></div>
+    <div><span class="stat-val">FREE</span><span class="stat-lbl">To Apply</span></div>
   </div>
 </section>
 
-<!-- ── Marquee ── -->
 <div class="marquee-bar">
   <span class="marquee-inner">
     &nbsp;ELITE ATHLETE MANAGEMENT &nbsp;·&nbsp; PERFORMANCE CONSULTING &nbsp;·&nbsp; WHO-VALIDATED ASSESSMENT &nbsp;·&nbsp; PREMIUM PARTNERSHIPS &nbsp;·&nbsp; CAREER DEVELOPMENT &nbsp;·&nbsp; AI-POWERED EVALUATION &nbsp;·&nbsp;
@@ -310,7 +172,6 @@
   </span>
 </div>
 
-<!-- ── Services ── -->
 <section class="section">
   <div class="container">
     <div class="section-tag">What We Do</div>
@@ -341,7 +202,6 @@
 
 <div class="divider-gold"></div>
 
-<!-- ── Process ── -->
 <section class="section process-section">
   <div class="container">
     <div class="process-inner">
@@ -352,31 +212,19 @@
         <div class="process-steps">
           <div class="process-step">
             <div class="ps-num">01</div>
-            <div>
-              <div class="ps-title">Take the Free Assessment</div>
-              <p class="ps-desc">Complete our 26-question WHO-validated quality of life evaluation. 4 domains, 10 minutes, completely free.</p>
-            </div>
+            <div><div class="ps-title">Take the Free Assessment</div><p class="ps-desc">Complete our 26-question WHO-validated quality of life evaluation. 4 domains, 10 minutes, completely free.</p></div>
           </div>
           <div class="process-step">
             <div class="ps-num">02</div>
-            <div>
-              <div class="ps-title">Create Your Account</div>
-              <p class="ps-desc">After completing the survey, create your athlete account. This is where you'll track your application and receive updates.</p>
-            </div>
+            <div><div class="ps-title">Create Your Account</div><p class="ps-desc">After completing the survey, create your athlete account. This is where you'll track your application and receive updates.</p></div>
           </div>
           <div class="process-step">
             <div class="ps-num">03</div>
-            <div>
-              <div class="ps-title">AI Evaluation</div>
-              <p class="ps-desc">Our AI evaluates your responses across four life domains and generates a detailed profile for the K3B team to review.</p>
-            </div>
+            <div><div class="ps-title">AI Evaluation</div><p class="ps-desc">Our AI evaluates your responses across four life domains and generates a detailed profile for the K3B team to review.</p></div>
           </div>
           <div class="process-step">
             <div class="ps-num">04</div>
-            <div>
-              <div class="ps-title">K3B Personal Review</div>
-              <p class="ps-desc">We personally review every profile. Within 48 hours, you receive a decision and — if accepted — an invitation to consult.</p>
-            </div>
+            <div><div class="ps-title">K3B Personal Review</div><p class="ps-desc">We personally review every profile. Within 48 hours, you receive a decision and — if accepted — an invitation to consult.</p></div>
           </div>
         </div>
       </div>
@@ -399,38 +247,20 @@
   </div>
 </section>
 
-<!-- ── Why K3B ── -->
 <section class="section">
   <div class="container">
     <div class="section-tag">Why K3B</div>
     <h2 class="section-title">The Difference</h2>
     <p class="section-desc">We are not a volume business. Every athlete we work with gets our full attention.</p>
     <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">◈</div>
-        <div class="why-title">Selective by Design</div>
-        <p class="why-desc">We deliberately limit our client roster. Every athlete we accept gets direct access to our team — not a junior associate.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">⬡</div>
-        <div class="why-title">Data-Driven Matching</div>
-        <p class="why-desc">Our assessment isn't a formality. We use your results to determine where K3B can create real, measurable impact in your career and life.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">◇</div>
-        <div class="why-title">Custom-Quoted Service</div>
-        <p class="why-desc">No off-the-shelf packages. Every accepted athlete receives a consultation plan and pricing built around their specific situation and goals.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon">△</div>
-        <div class="why-title">Career-Long Partnership</div>
-        <p class="why-desc">We build relationships that extend beyond a single season. K3B is your team behind the scenes — today, tomorrow, and in retirement.</p>
-      </div>
+      <div class="why-card"><div class="why-icon">◈</div><div class="why-title">Selective by Design</div><p class="why-desc">We deliberately limit our client roster. Every athlete we accept gets direct access to our team — not a junior associate.</p></div>
+      <div class="why-card"><div class="why-icon">⬡</div><div class="why-title">Data-Driven Matching</div><p class="why-desc">Our assessment isn't a formality. We use your results to determine where K3B can create real, measurable impact in your career and life.</p></div>
+      <div class="why-card"><div class="why-icon">◇</div><div class="why-title">Custom-Quoted Service</div><p class="why-desc">No off-the-shelf packages. Every accepted athlete receives a consultation plan and pricing built around their specific situation and goals.</p></div>
+      <div class="why-card"><div class="why-icon">△</div><div class="why-title">Career-Long Partnership</div><p class="why-desc">We build relationships that extend beyond a single season. K3B is your team behind the scenes — today, tomorrow, and in retirement.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ── CTA ── -->
 <div class="cta-banner">
   <div>
     <div class="cta-title">Ready to Apply?</div>
@@ -439,12 +269,11 @@
   <a href="/pages/assessment.html" class="btn-dark">Start Your Assessment →</a>
 </div>
 
-<!-- ── Footer ── -->
 <footer class="footer">
   <div class="container">
     <div class="footer-top">
       <div class="footer-logo-block">
-        <span class="logo-name">K3B Sports</span>
+        <img src="/K3B LOGO OFFICIAL.png" alt="K3B Sports" style="height:48px; width:auto; margin-bottom:6px; display:block;">
         <span class="logo-sub">Management, LLC</span>
       </div>
       <div class="footer-links">
@@ -458,7 +287,6 @@
           <h4>Athletes</h4>
           <a href="/pages/assessment.html">Take Assessment</a>
           <a href="/athlete/login.html">Athlete Login</a>
-          <a href="/athlete/register.html">Create Account</a>
         </div>
         <div class="footer-col">
           <h4>Legal</h4>
@@ -479,7 +307,6 @@
 
 <script src="/js/k3b.js"></script>
 <script>
-  // Update nav if athlete is logged in
   const user = K3B.auth.getUser();
   if (user) {
     document.getElementById('navActions').innerHTML = `
