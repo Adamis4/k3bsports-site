@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — K3B Sports Management</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <style>
+    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; padding:80px 0 96px; }
+    .contact-form-card {
+      background:var(--dark); border:1px solid var(--border-gold);
+      padding:48px 44px; position:relative;
+    }
+    .contact-form-card::before {
+      content:''; position:absolute; top:0; left:0;
+      width:48px; height:3px; background:var(--gold);
+    }
+    .success-state {
+      text-align:center; padding:40px 0; display:none;
+    }
+    .success-state.visible { display:block; }
+    .success-icon {
+      width:56px; height:56px; border-radius:50%;
+      background:rgba(76,175,80,0.1); border:1px solid rgba(76,175,80,0.3);
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 20px; font-size:22px; color:var(--success);
+    }
+    .info-block { margin-bottom:36px; }
+    .info-label {
+      font-size:10px; font-weight:600; letter-spacing:3px;
+      text-transform:uppercase; color:var(--gold); margin-bottom:6px;
+    }
+    .info-val { font-size:14px; color:var(--text-muted); font-weight:300; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/index.html" class="nav-logo"><div class="nav-logo-mark">K3B</div>K3B SPORTS</a>
+  <div class="nav-links">
+    <a href="/index.html">Home</a>
+    <a href="/pages/services.html">Services</a>
+    <a href="/pages/assessment.html">Assessment</a>
+    <a href="/pages/about.html">About</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/pages/assessment.html" class="btn btn-gold btn-sm">Take Assessment</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="contact-layout">
+    <div>
+      <div class="section-tag">Get in Touch</div>
+      <h1 class="section-title">Contact<br>K3B.</h1>
+      <p class="section-desc" style="margin-bottom:48px;">For general inquiries, partnership discussions, or questions about our services. For athlete applications, please complete the free assessment.</p>
+
+      <div class="info-block">
+        <div class="info-label">Email</div>
+        <div class="info-val">contact@k3bsports.com</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Website</div>
+        <div class="info-val">k3bsports.com</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Athletes</div>
+        <div class="info-val">All athlete inquiries begin with the free assessment. <a href="/pages/assessment.html" style="color:var(--gold);">Apply here.</a></div>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <div id="contactForm">
+        <div style="font-family:var(--font-display); font-size:32px; letter-spacing:2px; margin-bottom:8px;">Send a Message</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:32px;">We respond to all inquiries within 48 hours.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" id="cfFirst" placeholder="First">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" id="cfLast" placeholder="Last">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="cfEmail" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <select class="form-select" id="cfSubject">
+            <option value="">Select a topic</option>
+            <option>General Inquiry</option>
+            <option>Partnership / Business</option>
+            <option>Media / Press</option>
+            <option>Athlete Application Question</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" id="cfMessage" placeholder="Tell us how we can help..." style="min-height:120px;"></textarea>
+        </div>
+        <button class="btn btn-gold btn-full" onclick="submitContact()">Send Message →</button>
+      </div>
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <div style="font-family:var(--font-display); font-size:28px; letter-spacing:2px; margin-bottom:10px;">Message Sent</div>
+        <p style="font-size:13px; color:var(--text-muted);">Thank you for reaching out. The K3B team will be in touch within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:var(--dark); padding:40px 48px; border-top:1px solid var(--border-gold); display:flex; justify-content:space-between; align-items:center;">
+  <a href="/index.html" style="font-family:var(--font-display); font-size:20px; letter-spacing:4px; color:var(--gold);">K3B Sports</a>
+  <span style="font-size:11px; color:var(--text-dim);">© 2026 K3B Sports Management, LLC</span>
+</footer>
+
+<script src="/js/k3b.js"></script>
+<script>
+function submitContact() {
+  const first = document.getElementById('cfFirst').value.trim();
+  const email = document.getElementById('cfEmail').value.trim();
+  const msg = document.getElementById('cfMessage').value.trim();
+  if (!first || !email || !msg) { K3B.notify.show('Please fill in all required fields', 'error'); return; }
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successState').classList.add('visible');
+}
+</script>
+</body>
+</html>

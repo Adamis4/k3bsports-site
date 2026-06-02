@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — K3B Sports</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <style>
+    body { min-height:100vh; display:flex; flex-direction:column; }
+    .login-wrap {
+      flex:1; display:flex; align-items:center; justify-content:center; padding:40px 24px;
+    }
+    .login-card {
+      width:100%; max-width:400px;
+      background:var(--dark); border:1px solid var(--border-gold);
+      padding:48px 40px; position:relative;
+    }
+    .login-card::before {
+      content:''; position:absolute; top:0; left:0;
+      width:48px; height:3px; background:var(--gold);
+    }
+    .login-logo {
+      font-family:var(--font-display); font-size:18px;
+      letter-spacing:4px; color:var(--gold); margin-bottom:28px;
+    }
+    .login-title {
+      font-family:var(--font-display); font-size:36px; letter-spacing:2px; margin-bottom:8px;
+    }
+    .login-sub { font-size:13px; color:var(--text-muted); margin-bottom:32px; }
+    .error-msg {
+      background:rgba(244,67,54,0.08); border:1px solid rgba(244,67,54,0.25);
+      padding:12px 16px; font-size:12px; color:var(--danger);
+      margin-bottom:20px; display:none;
+    }
+    .error-msg.show { display:block; }
+    .demo-hint {
+      margin-top:20px; padding:14px; background:var(--gold-dim);
+      border:1px solid var(--border-gold); font-size:11px;
+      color:var(--text-muted); line-height:1.6;
+    }
+    .demo-hint strong { color:var(--gold); }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/index.html" class="nav-logo">
+    <div class="nav-logo-mark">K3B</div>
+    K3B SPORTS
+  </a>
+</nav>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">K3B Admin</div>
+    <h1 class="login-title">Admin<br>Console</h1>
+    <p class="login-sub">Authorized K3B team access only.</p>
+
+    <div class="error-msg" id="errorMsg">Invalid credentials. Please try again.</div>
+
+    <div class="form-group">
+      <label class="form-label">Admin Username</label>
+      <input class="form-input" type="text" id="usernameInput" placeholder="admin" onkeydown="if(event.key==='Enter') login()">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" id="passwordInput" placeholder="Password" onkeydown="if(event.key==='Enter') login()">
+    </div>
+    <button class="btn btn-gold btn-full" style="margin-top:8px;" onclick="login()">Sign In →</button>
+
+    <div class="demo-hint">
+      <strong>Demo Access:</strong><br>
+      Username: <strong>admin</strong> · Password: <strong>k3badmin</strong><br>
+      Includes 4 sample athletes across all statuses.
+    </div>
+  </div>
+</div>
+
+<script src="/js/k3b.js"></script>
+<script>
+if (K3B.auth.isAdminLoggedIn()) {
+  window.location.href = '/admin/dashboard.html';
+}
+
+const ADMIN_CREDENTIALS = [
+  { username: 'admin', password: 'k3badmin', name: 'K3B Admin' }
+];
+
+function login() {
+  const username = document.getElementById('usernameInput').value.trim().toLowerCase();
+  const password = document.getElementById('passwordInput').value;
+  document.getElementById('errorMsg').classList.remove('show');
+
+  const admin = ADMIN_CREDENTIALS.find(a => a.username === username && a.password === password);
+  if (!admin) {
+    document.getElementById('errorMsg').classList.add('show');
+    return;
+  }
+  K3B.auth.loginAdmin({ username: admin.username, name: admin.name });
+  window.location.href = '/admin/dashboard.html';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — K3B Sports</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <style>
+    body { min-height: 100vh; }
+    .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 72px); }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--dark); border-right: 1px solid var(--border-gold);
+      padding: 28px 0; position: sticky; top: 72px;
+      height: calc(100vh - 72px); overflow-y: auto;
+    }
+    .sidebar-brand {
+      padding: 0 20px 24px; border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .sidebar-brand-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .sidebar-brand-sub {
+      font-size: 11px; color: var(--text-dim); margin-top: 2px;
+    }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px; font-size: 11px; font-weight: 500;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-muted); transition: all var(--transition);
+      text-decoration: none; border-left: 2px solid transparent;
+    }
+    .sidebar-nav a:hover { color: var(--text); }
+    .sidebar-nav a.active { color: var(--gold); border-left-color: var(--gold); background: var(--gold-dim); }
+    .sidebar-count {
+      margin-left: auto; font-family: var(--font-display);
+      font-size: 14px; color: var(--gold);
+    }
+    .sidebar-section-label {
+      padding: 20px 20px 8px; font-size: 9px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim);
+    }
+    .sidebar-footer {
+      padding: 16px 20px; border-top: 1px solid var(--border); margin-top: 16px;
+    }
+
+    /* Main */
+    .admin-main { padding: 40px; overflow-y: auto; }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+    .admin-title { font-family: var(--font-display); font-size: 38px; letter-spacing: 2px; }
+    .admin-sub { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 32px; }
+    .stat-box { background: var(--dark); border: 1px solid var(--border); padding: 20px 16px; cursor: pointer; transition: border-color var(--transition); }
+    .stat-box:hover { border-color: var(--border-gold); }
+    .stat-box.active { border-color: var(--gold); }
+    .stat-box-val { font-family: var(--font-display); font-size: 36px; letter-spacing: 2px; line-height: 1; }
+    .stat-box-lbl { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+
+    /* Filters */
+    .filters-row { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .search-input {
+      flex: 1; background: var(--dark); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-body); font-size: 13px;
+      padding: 11px 16px; outline: none; max-width: 320px;
+      transition: border-color var(--transition);
+    }
+    .search-input:focus { border-color: var(--border-gold); }
+    .search-input::placeholder { color: var(--text-dim); }
+    .filter-select {
+      background: var(--dark); border: 1px solid var(--border);
+      color: var(--text-muted); font-family: var(--font-body); font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 11px 16px; outline: none; cursor: pointer;
+    }
+    .filter-select option { text-transform: none; letter-spacing: 0; background: var(--dark2); }
+
+    /* Athletes table */
+    .athletes-table { width: 100%; border-collapse: collapse; }
+    .athletes-table th {
+      text-align: left; padding: 12px 16px;
+      font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-dim); border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .athletes-table td {
+      padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 13px;
+    }
+    .athletes-table tr:hover td { background: rgba(255,255,255,0.02); cursor: pointer; }
+    .athlete-name-cell { display: flex; align-items: center; gap: 12px; }
+    .athlete-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--gold-dim); border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 13px; color: var(--gold);
+      flex-shrink: 0;
+    }
+    .athlete-fullname { font-weight: 500; color: var(--text); }
+    .athlete-sport { font-size: 11px; color: var(--text-dim); }
+    .score-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-display); font-size: 16px; font-weight: 400;
+    }
+    .score-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .recommendation-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 3px 8px;
+    }
+    .rec-REVIEW { color: var(--success); background: rgba(76,175,80,0.1); }
+    .rec-MONITOR { color: var(--warning); background: rgba(255,152,0,0.1); }
+    .rec-PASS { color: var(--danger); background: rgba(244,67,54,0.1); }
+    .empty-state {
+      text-align: center; padding: 80px 40px;
+      color: var(--text-dim); font-size: 13px;
+    }
+    .empty-state .empty-icon {
+      font-family: var(--font-display); font-size: 48px;
+      color: rgba(184,151,58,0.15); display: block; margin-bottom: 16px;
+    }
+
+    /* Detail panel */
+    .detail-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      z-index: 300; display: none; align-items: flex-start; justify-content: flex-end;
+    }
+    .detail-overlay.open { display: flex; }
+    .detail-panel {
+      width: 560px; height: 100vh; overflow-y: auto;
+      background: var(--dark); border-left: 1px solid var(--border-gold);
+      padding: 40px 36px;
+      animation: slidePanel 0.25s ease;
+    }
+    @keyframes slidePanel { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    .panel-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 20px; cursor: pointer; float: right; margin-top: -4px;
+      transition: color var(--transition);
+    }
+    .panel-close:hover { color: var(--text); }
+    .panel-athlete-header { margin-bottom: 28px; }
+    .panel-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--gold-dim); border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 22px; color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .panel-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 2px; margin-bottom: 4px; }
+    .panel-meta { font-size: 12px; color: var(--text-muted); }
+    .panel-scores {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      margin: 20px 0;
+    }
+    .ps-item { background: var(--dark2); padding: 14px 12px; text-align: center; }
+    .ps-val { font-family: var(--font-display); font-size: 24px; line-height: 1; }
+    .ps-lbl { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; }
+    .panel-section { margin: 24px 0; }
+    .panel-section-title {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .panel-text { font-size: 13px; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
+    .panel-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .status-select {
+      width: 100%; background: var(--dark2); border: 1px solid var(--border-gold);
+      color: var(--text); font-family: var(--font-body); font-size: 13px;
+      padding: 12px 16px; outline: none; cursor: pointer; margin-bottom: 12px;
+    }
+    .status-select option { background: var(--dark2); }
+    .date-input {
+      width: 100%; background: var(--dark2); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-body); font-size: 13px;
+      padding: 12px 16px; outline: none; margin-bottom: 12px;
+    }
+    .date-input:focus { border-color: var(--gold); }
+    .note-textarea {
+      width: 100%; background: var(--dark2); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-body); font-size: 13px;
+      font-weight: 300; padding: 12px 16px; outline: none;
+      resize: vertical; min-height: 80px; line-height: 1.6;
+      transition: border-color var(--transition);
+    }
+    .note-textarea:focus { border-color: var(--border-gold); }
+    .notes-list { display: flex; flex-direction: column; gap: 10px; }
+    .note-item {
+      background: var(--dark2); padding: 14px; border-left: 2px solid var(--border-gold);
+    }
+    .note-meta { font-size: 10px; color: var(--text-dim); margin-bottom: 6px; letter-spacing: 1px; }
+    .note-body { font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 1.6; }
+    .red-flags-list { list-style: none; }
+    .red-flags-list li {
+      font-size: 12px; color: rgba(244,67,54,0.85); padding: 5px 0;
+      display: flex; gap: 8px; align-items: flex-start; font-weight: 300;
+    }
+    .red-flags-list li::before { content: '●'; font-size: 7px; margin-top: 4px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/index.html" class="nav-logo">
+    <div class="nav-logo-mark">K3B</div>
+    K3B SPORTS
+  </a>
+  <div class="nav-links">
+    <a href="/admin/dashboard.html" class="active">Admin</a>
+  </div>
+  <div class="nav-actions">
+    <span style="font-size:11px; color:var(--text-dim); letter-spacing:1px; margin-right:8px;" id="adminName"></span>
+    <button class="btn btn-outline btn-sm" onclick="K3B.auth.logoutAdmin()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-title">K3B Admin</div>
+      <div class="sidebar-brand-sub">Management Console</div>
+    </div>
+    <div class="sidebar-section-label">Athletes</div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <a href="#" class="active" onclick="filterByStatus(null, this)">
+        All Athletes <span class="sidebar-count" id="cnt-all">0</span>
+      </a>
+      <a href="#" onclick="filterByStatus('pending', this)">
+        Pending <span class="sidebar-count" id="cnt-pending" style="color:var(--warning)">0</span>
+      </a>
+      <a href="#" onclick="filterByStatus('review', this)">
+        Under Review <span class="sidebar-count" id="cnt-review">0</span>
+      </a>
+      <a href="#" onclick="filterByStatus('accepted', this)">
+        Accepted <span class="sidebar-count" id="cnt-accepted" style="color:var(--success)">0</span>
+      </a>
+      <a href="#" onclick="filterByStatus('monitoring', this)">
+        Monitoring <span class="sidebar-count" id="cnt-monitoring">0</span>
+      </a>
+      <a href="#" onclick="filterByStatus('rejected', this)">
+        Not a Fit <span class="sidebar-count" id="cnt-rejected" style="color:var(--danger)">0</span>
+      </a>
+    </nav>
+    <div class="sidebar-section-label">AI Recommendation</div>
+    <nav class="sidebar-nav">
+      <a href="#" onclick="filterByRec('REVIEW', this)">Flagged: Review</a>
+      <a href="#" onclick="filterByRec('MONITOR', this)">Flagged: Monitor</a>
+      <a href="#" onclick="filterByRec('PASS', this)">Flagged: Pass</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" onclick="K3B.auth.logoutAdmin()" style="font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--text-dim); background:none; border:none; cursor:pointer; font-family:var(--font-body);">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <h1 class="admin-title">Athletes</h1>
+        <p class="admin-sub" id="tableSubtitle">All applications</p>
+      </div>
+      <a href="/pages/assessment.html" class="btn btn-ghost btn-sm" target="_blank">View Assessment ↗</a>
+    </div>
+
+    <div class="stats-row" id="statsRow">
+      <div class="stat-box" onclick="filterByStatus(null, null)">
+        <div class="stat-box-val" id="stat-total">0</div>
+        <div class="stat-box-lbl">Total</div>
+      </div>
+      <div class="stat-box" onclick="filterByStatus('pending', null)">
+        <div class="stat-box-val" style="color:var(--warning)" id="stat-pending">0</div>
+        <div class="stat-box-lbl">Pending</div>
+      </div>
+      <div class="stat-box" onclick="filterByStatus('review', null)">
+        <div class="stat-box-val" style="color:var(--gold)" id="stat-review">0</div>
+        <div class="stat-box-lbl">Review</div>
+      </div>
+      <div class="stat-box" onclick="filterByStatus('accepted', null)">
+        <div class="stat-box-val" style="color:var(--success)" id="stat-accepted">0</div>
+        <div class="stat-box-lbl">Accepted</div>
+      </div>
+      <div class="stat-box" onclick="filterByStatus('rejected', null)">
+        <div class="stat-box-val" style="color:var(--danger)" id="stat-rejected">0</div>
+        <div class="stat-box-lbl">Not a Fit</div>
+      </div>
+    </div>
+
+    <div class="filters-row">
+      <input class="search-input" type="text" placeholder="Search athletes, sport, level..." id="searchInput" oninput="renderTable()">
+      <select class="filter-select" id="sortSelect" onchange="renderTable()">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="score-high">Score: High to Low</option>
+        <option value="score-low">Score: Low to High</option>
+      </select>
+    </div>
+
+    <table class="athletes-table">
+      <thead>
+        <tr>
+          <th>Athlete</th>
+          <th>Sport / Level</th>
+          <th>Overall</th>
+          <th>Domains</th>
+          <th>AI Rec</th>
+          <th>Status</th>
+          <th>Applied</th>
+        </tr>
+      </thead>
+      <tbody id="athletesTableBody"></tbody>
+    </table>
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <span class="empty-icon">◎</span>
+      No athletes match this filter.
+    </div>
+  </main>
+</div>
+
+<!-- Detail Panel -->
+<div class="detail-overlay" id="detailOverlay" onclick="closePanel(event)">
+  <div class="detail-panel" id="detailPanel">
+    <button class="panel-close" onclick="closeDetailPanel()">✕</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script src="/js/k3b.js"></script>
+<script>
+K3B.auth.requireAdmin();
+K3B.seed.demoAthletes();
+
+const admin = K3B.auth.getAdmin();
+document.getElementById('adminName').textContent = admin.name || 'Admin';
+
+let activeFilter = null;
+let activeRecFilter = null;
+
+function updateStats() {
+  const stats = K3B.athletes.getStats();
+  document.getElementById('cnt-all').textContent = stats.total;
+  document.getElementById('cnt-pending').textContent = stats.pending;
+  document.getElementById('cnt-review').textContent = stats.review;
+  document.getElementById('cnt-accepted').textContent = stats.accepted;
+  document.getElementById('cnt-monitoring').textContent = stats.monitoring;
+  document.getElementById('cnt-rejected').textContent = stats.rejected;
+  document.getElementById('stat-total').textContent = stats.total;
+  document.getElementById('stat-pending').textContent = stats.pending;
+  document.getElementById('stat-review').textContent = stats.review;
+  document.getElementById('stat-accepted').textContent = stats.accepted;
+  document.getElementById('stat-rejected').textContent = stats.rejected;
+}
+
+function filterByStatus(status, el) {
+  activeFilter = status;
+  activeRecFilter = null;
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('tableSubtitle').textContent = status ? K3B.fmt.statusLabel(status) + ' applications' : 'All applications';
+  renderTable();
+  if (event) event.preventDefault();
+}
+
+function filterByRec(rec, el) {
+  activeRecFilter = rec;
+  activeFilter = null;
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('tableSubtitle').textContent = 'AI Recommendation: ' + rec;
+  renderTable();
+  if (event) event.preventDefault();
+}
+
+function renderTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const sort = document.getElementById('sortSelect').value;
+  let all = K3B.athletes.getAll();
+
+  if (activeFilter) all = all.filter(a => a.status === activeFilter);
+  if (activeRecFilter) all = all.filter(a => a.aiEvaluation && a.aiEvaluation.recommendation === activeRecFilter);
+  if (search) all = all.filter(a =>
+    (a.firstName + ' ' + a.lastName).toLowerCase().includes(search) ||
+    (a.sport || '').toLowerCase().includes(search) ||
+    (a.level || '').toLowerCase().includes(search) ||
+    (a.email || '').toLowerCase().includes(search)
+  );
+
+  const overall = a => a.scores ? Math.round((a.scores.physical + a.scores.psychological + a.scores.social + a.scores.environment) / 4) : 0;
+  if (sort === 'newest') all.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  else if (sort === 'oldest') all.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt));
+  else if (sort === 'score-high') all.sort((a,b) => overall(b) - overall(a));
+  else all.sort((a,b) => overall(a) - overall(b));
+
+  const tbody = document.getElementById('athletesTableBody');
+  tbody.innerHTML = '';
+  document.getElementById('emptyState').style.display = all.length === 0 ? 'block' : 'none';
+
+  all.forEach(a => {
+    const ov = overall(a);
+    const color = K3B.fmt.scoreColor(ov);
+    const rec = a.aiEvaluation && a.aiEvaluation.recommendation;
+    const s = a.scores || { physical:0, psychological:0, social:0, environment:0 };
+    const tr = document.createElement('tr');
+    tr.onclick = () => openDetailPanel(a.id);
+    tr.innerHTML = `
+      <td>
+        <div class="athlete-name-cell">
+          <div class="athlete-avatar">${K3B.fmt.initials(a.firstName+' '+a.lastName)}</div>
+          <div>
+            <div class="athlete-fullname">${a.firstName} ${a.lastName}</div>
+            <div class="athlete-sport">${a.email}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div style="font-size:13px; color:var(--text)">${a.sport || '—'}</div>
+        <div style="font-size:11px; color:var(--text-dim)">${a.level || ''}</div>
+      </td>
+      <td>
+        <div class="score-pill">
+          <div class="score-dot" style="background:${color}"></div>
+          <span style="color:${color}">${ov}</span>
+        </div>
+      </td>
+      <td>
+        <div style="display:flex; gap:8px; font-size:11px;">
+          <span style="color:${K3B.fmt.scoreColor(s.physical)}">${s.physical}</span>
+          <span style="color:var(--border)">·</span>
+          <span style="color:${K3B.fmt.scoreColor(s.psychological)}">${s.psychological}</span>
+          <span style="color:var(--border)">·</span>
+          <span style="color:${K3B.fmt.scoreColor(s.social)}">${s.social}</span>
+          <span style="color:var(--border)">·</span>
+          <span style="color:${K3B.fmt.scoreColor(s.environment)}">${s.environment}</span>
+        </div>
+        <div style="font-size:9px; color:var(--text-dim); letter-spacing:1px; margin-top:2px;">P · PSY · S · E</div>
+      </td>
+      <td>${rec ? `<span class="recommendation-tag rec-${rec}">${rec}</span>` : '—'}</td>
+      <td><span class="badge ${K3B.fmt.statusClass(a.status)}">${K3B.fmt.statusLabel(a.status)}</span></td>
+      <td style="color:var(--text-dim); font-size:12px;">${K3B.fmt.dateShort(a.createdAt)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function openDetailPanel(id) {
+  const a = K3B.athletes.getById(id);
+  if (!a) return;
+  const ai = a.aiEvaluation || {};
+  const s = a.scores || { physical:0, psychological:0, social:0, environment:0 };
+  const overall = Math.round((s.physical+s.psychological+s.social+s.environment)/4);
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="panel-athlete-header">
+      <div class="panel-avatar">${K3B.fmt.initials(a.firstName+' '+a.lastName)}</div>
+      <div class="panel-name">${a.firstName} ${a.lastName}</div>
+      <div class="panel-meta">${a.email} · ${a.sport || ''} · ${a.level || ''}</div>
+      <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
+        <span class="badge ${K3B.fmt.statusClass(a.status)}">${K3B.fmt.statusLabel(a.status)}</span>
+        ${ai.recommendation ? `<span class="recommendation-tag rec-${ai.recommendation}">${ai.recommendation}</span>` : ''}
+        <span style="font-size:11px; color:var(--text-dim);">Applied ${K3B.fmt.date(a.createdAt)}</span>
+      </div>
+    </div>
+
+    <div class="panel-scores">
+      ${['physical','psychological','social','environment'].map((k,i) => {
+        const sc = s[k]||0; const color = K3B.fmt.scoreColor(sc);
+        const labels = ['Phys','Psych','Social','Env'];
+        return `<div class="ps-item">
+          <div class="ps-val" style="color:${color}">${sc}</div>
+          <div class="ps-lbl">${labels[i]}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="text-align:center; font-family:var(--font-display); font-size:28px; color:${K3B.fmt.scoreColor(overall)}; margin-bottom:4px;">${overall} <span style="font-size:14px; font-family:var(--font-body); color:var(--text-dim);">overall</span></div>
+
+    ${ai.headline ? `<div class="panel-divider"></div>
+    <div class="panel-section">
+      <div class="panel-section-title">AI Headline</div>
+      <div style="font-family:var(--font-display); font-size:22px; letter-spacing:2px; margin-bottom:12px;">${ai.headline}</div>
+      <div class="panel-text">${ai.overallVerdict || ''}</div>
+    </div>` : ''}
+
+    ${ai.topStrength ? `<div class="panel-divider"></div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="panel-section" style="margin:0">
+        <div class="panel-section-title">Top Strength</div>
+        <p class="panel-text">${ai.topStrength}</p>
+      </div>
+      <div class="panel-section" style="margin:0">
+        <div class="panel-section-title">Key Opportunity</div>
+        <p class="panel-text">${ai.keyOpportunity || ''}</p>
+      </div>
+    </div>` : ''}
+
+    ${ai.redFlags && ai.redFlags.length > 0 ? `<div class="panel-divider"></div>
+    <div class="panel-section">
+      <div class="panel-section-title" style="color:var(--danger);">Red Flags</div>
+      <ul class="red-flags-list">${ai.redFlags.map(f=>`<li>${f}</li>`).join('')}</ul>
+    </div>` : ''}
+
+    <div class="panel-divider"></div>
+    <div class="panel-section">
+      <div class="panel-section-title">Update Status</div>
+      <select class="status-select" id="panelStatus" onchange="updateStatus('${a.id}')">
+        <option value="pending" ${a.status==='pending'?'selected':''}>Pending Review</option>
+        <option value="review" ${a.status==='review'?'selected':''}>Under Review</option>
+        <option value="accepted" ${a.status==='accepted'?'selected':''}>Accepted</option>
+        <option value="monitoring" ${a.status==='monitoring'?'selected':''}>Monitoring</option>
+        <option value="rejected" ${a.status==='rejected'?'selected':''}>Not a Fit</option>
+      </select>
+      <div class="panel-section-title" style="margin-top:16px; margin-bottom:8px;">Consultation Date</div>
+      <input type="datetime-local" class="date-input" id="panelConsultDate"
+        value="${a.consultationDate ? new Date(a.consultationDate).toISOString().slice(0,16) : ''}"
+        onchange="updateConsultDate('${a.id}')">
+    </div>
+
+    <div class="panel-divider"></div>
+    <div class="panel-section">
+      <div class="panel-section-title">Team Notes</div>
+      <textarea class="note-textarea" id="noteInput" placeholder="Add a note about this athlete..."></textarea>
+      <button class="btn btn-ghost btn-sm" style="margin-top:8px;" onclick="addNote('${a.id}')">Add Note</button>
+      <div class="notes-list" id="notesList" style="margin-top:16px;">
+        ${(a.notes||[]).map(n=>`
+          <div class="note-item">
+            <div class="note-meta">${n.author} · ${K3B.fmt.date(n.createdAt)}</div>
+            <div class="note-body">${n.text}</div>
+          </div>`).join('') || '<p style="font-size:12px; color:var(--text-dim);">No notes yet.</p>'}
+      </div>
+    </div>`;
+
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closePanel(event) {
+  if (event.target === document.getElementById('detailOverlay')) closeDetailPanel();
+}
+function closeDetailPanel() {
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+
+function updateStatus(id) {
+  const val = document.getElementById('panelStatus').value;
+  K3B.athletes.update(id, { status: val });
+  K3B.notify.show('Status updated: ' + K3B.fmt.statusLabel(val), 'success');
+  updateStats();
+  renderTable();
+}
+
+function updateConsultDate(id) {
+  const val = document.getElementById('panelConsultDate').value;
+  if (val) {
+    K3B.athletes.update(id, { consultationDate: new Date(val).toISOString() });
+    K3B.notify.show('Consultation date saved', 'success');
+  }
+}
+
+function addNote(id) {
+  const text = document.getElementById('noteInput').value.trim();
+  if (!text) return;
+  const adminObj = K3B.auth.getAdmin();
+  K3B.athletes.addNote(id, text, adminObj.name || 'Admin');
+  document.getElementById('noteInput').value = '';
+  K3B.notify.show('Note added', 'success');
+  openDetailPanel(id);
+}
+
+updateStats();
+renderTable();
+</script>
+</body>
+</html>

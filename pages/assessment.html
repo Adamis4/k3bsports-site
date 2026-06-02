@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athlete Assessment — K3B Sports Management</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <style>
+    body { min-height: 100vh; }
+    .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 100px; }
+
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 52px;
+    }
+    .top-logo {
+      font-family: var(--font-display); font-size: 22px;
+      letter-spacing: 4px; color: var(--gold);
+      text-decoration: none;
+    }
+    .step-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--text-dim);
+    }
+
+    /* Progress */
+    .progress-track { display: flex; gap: 6px; margin-bottom: 52px; }
+    .prog-seg {
+      flex: 1; height: 3px; background: rgba(255,255,255,0.07);
+      transition: background 0.4s ease;
+    }
+    .prog-seg.active { background: var(--gold); }
+    .prog-seg.done { background: rgba(184,151,58,0.35); }
+
+    /* Domain header */
+    .domain-eyebrow {
+      font-size: 10px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    }
+    .domain-eyebrow::before { content:''; width:20px; height:1px; background:var(--gold); }
+    .domain-h {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 7vw, 64px);
+      letter-spacing: 2px; color: var(--text); line-height: 1;
+      margin-bottom: 10px;
+    }
+    .domain-desc {
+      font-size: 13px; font-weight: 300; color: var(--text-muted);
+      line-height: 1.75; margin-bottom: 44px; max-width: 560px;
+    }
+
+    /* Questions */
+    .questions { display: flex; flex-direction: column; gap: 24px; }
+    .q-block {
+      background: var(--dark); border: 1px solid var(--border);
+      padding: 28px 28px 22px;
+      transition: border-color 0.2s ease;
+    }
+    .q-block.answered { border-color: rgba(184,151,58,0.3); }
+    .q-text {
+      font-size: 14px; font-weight: 400; line-height: 1.65;
+      color: rgba(255,255,255,0.82); margin-bottom: 20px;
+    }
+    .scale-row { display: flex; gap: 8px; }
+    .scale-btn {
+      flex: 1; padding: 10px 2px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 10px; font-weight: 500; font-family: var(--font-body);
+      cursor: pointer; transition: all 0.15s ease;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      text-align: center; line-height: 1.2;
+    }
+    .scale-btn:hover { border-color: rgba(184,151,58,0.45); color: var(--gold); }
+    .scale-btn.selected {
+      background: rgba(184,151,58,0.1); border-color: var(--gold); color: var(--gold);
+    }
+    .scale-num {
+      font-family: var(--font-display); font-size: 24px; line-height: 1;
+    }
+    .scale-lbl { font-size: 9px; letter-spacing: 0.3px; }
+
+    /* Nav row */
+    .nav-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .progress-note {
+      font-size: 11px; color: var(--text-dim); letter-spacing: 1px;
+    }
+
+    /* Account form */
+    .account-screen { display: none; }
+    .account-screen.visible { display: block; }
+    .form-check {
+      display: flex; align-items: flex-start; gap: 12px;
+      cursor: pointer; margin-top: 4px;
+    }
+    .form-check input { margin-top: 2px; accent-color: var(--gold); }
+    .form-check span {
+      font-size: 12px; font-weight: 300; color: var(--text-muted); line-height: 1.6;
+    }
+    .form-check a { color: var(--gold); }
+
+    /* Results screen */
+    .results-screen { display: none; }
+    .results-screen.visible { display: block; }
+    .loading-state { text-align: center; padding: 80px 0; }
+    .loading-state .spinner { margin: 0 auto 24px; }
+    .loading-label {
+      font-size: 11px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-dim);
+    }
+    .loading-steps { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+    .loading-step {
+      font-size: 12px; color: var(--text-dim); letter-spacing: 1px;
+      opacity: 0; animation: fadeIn 0.4s ease forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .result-header-card {
+      background: var(--dark); border: 1px solid var(--border-gold);
+      padding: 40px; position: relative; margin-bottom: 20px;
+    }
+    .result-header-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 56px; height: 3px; background: var(--gold);
+    }
+    .result-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .result-headline {
+      font-family: var(--font-display); font-size: 36px;
+      letter-spacing: 2px; color: var(--text); margin-top: 8px;
+    }
+    .domain-scores-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; margin: 24px 0;
+    }
+    .ds-item {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      padding: 18px 16px;
+    }
+    .ds-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px;
+    }
+    .ds-bar { height: 2px; background: rgba(255,255,255,0.07); margin-bottom: 8px; }
+    .ds-fill { height: 2px; transition: width 1.2s ease; }
+    .ds-val {
+      font-family: var(--font-display); font-size: 28px;
+      color: var(--gold); line-height: 1;
+    }
+    .result-summary-card {
+      background: var(--dark); border: 1px solid var(--border);
+      padding: 36px; margin-bottom: 20px;
+    }
+    .result-section-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    .result-text {
+      font-size: 13px; font-weight: 300; color: var(--text-muted);
+      line-height: 1.8; margin-bottom: 20px;
+    }
+    .result-divider {
+      height: 1px; background: var(--border); margin: 20px 0;
+    }
+    .red-flag-list { list-style: none; }
+    .red-flag-list li {
+      font-size: 12px; font-weight: 300; color: rgba(244,67,54,0.8);
+      padding: 6px 0; display: flex; align-items: center; gap: 10px;
+    }
+    .red-flag-list li::before {
+      content: '!'; display: flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 1px solid rgba(244,67,54,0.4);
+      font-size: 9px; font-weight: 600; flex-shrink: 0; color: var(--danger);
+    }
+    .athlete-msg-card {
+      background: rgba(184,151,58,0.06); border: 1px solid var(--border-gold);
+      padding: 32px; margin-bottom: 20px;
+    }
+    .portal-cta {
+      background: var(--dark); border: 1px solid var(--border);
+      padding: 36px; text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="top-bar">
+    <a href="/index.html" class="top-logo">K3B Sports</a>
+    <div class="step-label" id="stepLabel">Step 1 of 4</div>
+  </div>
+
+  <div class="progress-track" id="progressTrack">
+    <div class="prog-seg active" id="seg0"></div>
+    <div class="prog-seg" id="seg1"></div>
+    <div class="prog-seg" id="seg2"></div>
+    <div class="prog-seg" id="seg3"></div>
+  </div>
+
+  <!-- Survey Screen -->
+  <div id="surveyScreen">
+    <div class="domain-eyebrow" id="domainEyebrow"></div>
+    <h1 class="domain-h" id="domainH"></h1>
+    <p class="domain-desc" id="domainDesc"></p>
+    <div class="questions" id="questionsContainer"></div>
+    <div class="nav-row">
+      <button class="btn btn-outline" id="btnBack" onclick="goBack()">← Back</button>
+      <span class="progress-note" id="progressNote"></span>
+      <button class="btn btn-gold" id="btnNext" onclick="goNext()" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- Account Screen -->
+  <div id="accountScreen" class="account-screen">
+    <div class="domain-eyebrow">Almost Done</div>
+    <h1 class="domain-h">Create Your<br>Account</h1>
+    <p class="domain-desc">Your assessment is complete. Create your account to receive your personalized results and track your application status with K3B.</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">First Name *</label>
+        <input class="form-input" type="text" id="firstName" placeholder="Marcus">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name *</label>
+        <input class="form-input" type="text" id="lastName" placeholder="Johnson">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email Address *</label>
+      <input class="form-input" type="email" id="emailInput" placeholder="you@email.com">
+      <div class="form-error" id="emailError">An account with this email already exists. <a href="/athlete/login.html" style="color:var(--gold)">Sign in instead</a></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Sport *</label>
+        <input class="form-input" type="text" id="sportInput" placeholder="e.g. Basketball, NFL, Soccer">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Level *</label>
+        <select class="form-select" id="levelInput">
+          <option value="">Select your level</option>
+          <option>Professional</option>
+          <option>Semi-Professional</option>
+          <option>College / NCAA</option>
+          <option>High School</option>
+          <option>Amateur / Club</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Create Password *</label>
+        <input class="form-input" type="password" id="passwordInput" placeholder="Min. 8 characters">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password *</label>
+        <input class="form-input" type="password" id="confirmPassword" placeholder="Repeat password">
+        <div class="form-error" id="pwError">Passwords do not match</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-check">
+        <input type="checkbox" id="agreeTerms">
+        <span>I agree to the <a href="/pages/terms.html" target="_blank">Terms of Service</a> and <a href="/pages/privacy.html" target="_blank">Privacy Policy</a>. I understand my assessment responses will be reviewed by the K3B team.</span>
+      </label>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-outline" onclick="goBackToSurvey()">← Back</button>
+      <span></span>
+      <button class="btn btn-gold btn-lg" onclick="submitAssessment()">Submit Assessment →</button>
+    </div>
+  </div>
+
+  <!-- Results Screen -->
+  <div id="resultsScreen" class="results-screen">
+    <div id="loadingState" class="loading-state">
+      <div class="spinner"></div>
+      <div class="loading-label">Analyzing your assessment</div>
+      <div class="loading-steps">
+        <div class="loading-step" style="animation-delay:0.8s">Scoring four life domains...</div>
+        <div class="loading-step" style="animation-delay:2s">Running AI evaluation engine...</div>
+        <div class="loading-step" style="animation-delay:3.5s">Generating your profile...</div>
+      </div>
+    </div>
+
+    <div id="resultContent" style="display:none;">
+      <div class="result-header-card">
+        <div class="result-top">
+          <div>
+            <div class="domain-eyebrow" style="margin-bottom:6px;">Assessment Complete</div>
+            <div class="result-headline" id="resultHeadline"></div>
+          </div>
+          <div id="resultBadge"></div>
+        </div>
+        <div class="domain-scores-grid" id="domainScoresGrid"></div>
+        <p style="font-size:12px; color:var(--text-dim); letter-spacing:1px;">Scores out of 100 · Based on WHO-BREF validated instrument</p>
+      </div>
+
+      <div class="athlete-msg-card">
+        <div class="result-section-title">From the K3B AI Review</div>
+        <p class="result-text" id="athleteMsg"></p>
+      </div>
+
+      <div class="result-summary-card">
+        <div class="result-section-title">Overall Assessment</div>
+        <p class="result-text" id="overallVerdict"></p>
+        <div class="result-divider"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+          <div>
+            <div class="result-section-title">Top Strength</div>
+            <p class="result-text" id="topStrength" style="margin-bottom:0"></p>
+          </div>
+          <div>
+            <div class="result-section-title">Key Opportunity</div>
+            <p class="result-text" id="keyOpportunity" style="margin-bottom:0"></p>
+          </div>
+        </div>
+        <div id="redFlagsSection" style="display:none;">
+          <div class="result-divider"></div>
+          <div class="result-section-title">Areas of Concern</div>
+          <ul class="red-flag-list" id="redFlagsList"></ul>
+        </div>
+      </div>
+
+      <div class="portal-cta">
+        <div class="domain-eyebrow" style="justify-content:center;">Next Steps</div>
+        <h3 style="font-family:var(--font-display); font-size:28px; letter-spacing:2px; margin-bottom:12px;">Application Submitted</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:28px; max-width:420px; margin-left:auto; margin-right:auto;">The K3B team will personally review your full profile within 48 hours. Log in to your portal to track your application status.</p>
+        <a href="/athlete/portal.html" class="btn btn-gold btn-lg">Go to My Portal →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/k3b.js"></script>
+<script>
+const DOMAINS = [
+  {
+    eyebrow:"Domain 1 — Physical Health",
+    title:"Physical\nHealth",
+    desc:"These questions assess how your body is performing — pain, energy levels, sleep quality, mobility, and your capacity to train and compete at full capacity.",
+    questions:[
+      {id:"q3",text:"To what extent does physical pain prevent you from doing what you need to do?",reverse:true,labels:["Not at all","A little","Moderate","Very much","Extreme"]},
+      {id:"q4",text:"How much do you need medical treatment to function in your daily life?",reverse:true,labels:["Not at all","A little","Moderate","Very much","Extreme"]},
+      {id:"q10",text:"Do you have enough energy for everyday training and life?",labels:["Not at all","A little","Moderately","Mostly","Completely"]},
+      {id:"q15",text:"How well are you able to get around and move your body freely?",labels:["Very poor","Poor","Neutral","Good","Very good"]},
+      {id:"q16",text:"How satisfied are you with your sleep quality and recovery?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q17",text:"How satisfied are you with your ability to perform daily physical activities?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q18",text:"How satisfied are you with your capacity for work and athletic performance?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]}
+    ]
+  },
+  {
+    eyebrow:"Domain 2 — Psychological",
+    title:"Psychological\nWellbeing",
+    desc:"These questions explore your mental and emotional state — how much you enjoy life, your sense of purpose, focus, self-image, and overall psychological health.",
+    questions:[
+      {id:"q5",text:"How much do you enjoy life?",labels:["Not at all","A little","Moderate","Very much","Extremely"]},
+      {id:"q6",text:"To what extent do you feel your life to be meaningful?",labels:["Not at all","A little","Moderate","Very much","Extremely"]},
+      {id:"q7",text:"How well are you able to concentrate when you need to?",labels:["Not at all","A little","Moderately","Very well","Completely"]},
+      {id:"q11",text:"Are you able to accept your bodily appearance?",labels:["Not at all","A little","Moderately","Mostly","Completely"]},
+      {id:"q19",text:"How satisfied are you with yourself overall?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q26",text:"How often do you have negative feelings — low mood, despair, anxiety, or depression?",reverse:true,labels:["Never","Seldom","Quite often","Very often","Always"]}
+    ]
+  },
+  {
+    eyebrow:"Domain 3 — Social Relations",
+    title:"Social\nRelations",
+    desc:"These questions look at your personal relationships, support network, and how satisfied you are with your social connections and the support available to you.",
+    questions:[
+      {id:"q20",text:"How satisfied are you with your personal relationships?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q21",text:"How satisfied are you with your sex life?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q22",text:"How satisfied are you with the support you get from your friends and peers?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]}
+    ]
+  },
+  {
+    eyebrow:"Domain 4 — Environment",
+    title:"Environment\n& Resources",
+    desc:"These questions assess your living conditions, financial stability, access to health services and information, physical safety, and overall environmental quality.",
+    questions:[
+      {id:"q8",text:"How safe do you feel in your daily life?",labels:["Not at all","A little","Moderately","Very","Extremely"]},
+      {id:"q9",text:"How healthy and suitable is your physical environment — home, training spaces?",labels:["Very poor","Poor","Neutral","Good","Very good"]},
+      {id:"q12",text:"Do you have enough financial resources to meet your needs?",labels:["Not at all","A little","Moderately","Mostly","Completely"]},
+      {id:"q13",text:"How available to you is the information you need in your day-to-day life?",labels:["Not at all","A little","Moderately","Mostly","Completely"]},
+      {id:"q14",text:"To what extent do you have opportunity for leisure, rest, and recovery activities?",labels:["Not at all","A little","Moderately","Mostly","Completely"]},
+      {id:"q23",text:"How satisfied are you with the conditions of your living place?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q24",text:"How satisfied are you with your access to health services and medical care?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]},
+      {id:"q25",text:"How satisfied are you with your transport and ability to get where you need to go?",labels:["Very dissatisfied","Dissatisfied","Neutral","Satisfied","Very satisfied"]}
+    ]
+  }
+];
+
+let currentDomain = 0;
+let answers = {};
+let currentAthleteId = null;
+
+function renderDomain(idx) {
+  const d = DOMAINS[idx];
+  document.getElementById('stepLabel').textContent = 'Step ' + (idx+1) + ' of 4';
+  document.getElementById('domainEyebrow').textContent = d.eyebrow;
+  document.getElementById('domainH').innerHTML = d.title.replace('\n','<br>');
+  document.getElementById('domainDesc').textContent = d.desc;
+
+  for (let i = 0; i < 4; i++) {
+    const seg = document.getElementById('seg'+i);
+    seg.className = 'prog-seg';
+    if (i < idx) seg.classList.add('done');
+    else if (i === idx) seg.classList.add('active');
+  }
+
+  document.getElementById('btnBack').style.visibility = idx === 0 ? 'hidden' : 'visible';
+
+  const qc = document.getElementById('questionsContainer');
+  qc.innerHTML = '';
+  d.questions.forEach(q => {
+    const block = document.createElement('div');
+    block.className = 'q-block' + (answers[q.id] ? ' answered' : '');
+    block.id = 'block_' + q.id;
+    const qtext = document.createElement('div');
+    qtext.className = 'q-text'; qtext.textContent = q.text;
+    block.appendChild(qtext);
+    const row = document.createElement('div'); row.className = 'scale-row';
+    for (let v = 1; v <= 5; v++) {
+      const btn = document.createElement('button');
+      btn.className = 'scale-btn' + (answers[q.id] === v ? ' selected' : '');
+      btn.innerHTML = `<span class="scale-num">${v}</span><span class="scale-lbl">${q.labels[v-1]}</span>`;
+      const qid = q.id, val = v;
+      btn.onclick = () => {
+        answers[qid] = val;
+        document.querySelectorAll('#block_'+qid+' .scale-btn').forEach((b,i) => {
+          b.className = 'scale-btn' + (i+1 === val ? ' selected' : '');
+        });
+        document.getElementById('block_'+qid).classList.add('answered');
+        updateProgress();
+      };
+      row.appendChild(btn);
+    }
+    block.appendChild(row);
+    qc.appendChild(block);
+  });
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const d = DOMAINS[currentDomain];
+  const answered = d.questions.filter(q => answers[q.id]).length;
+  const total = d.questions.length;
+  document.getElementById('progressNote').textContent = answered + ' / ' + total + ' answered';
+  document.getElementById('btnNext').disabled = answered < total;
+}
+
+function goNext() {
+  if (currentDomain < 3) { currentDomain++; renderDomain(currentDomain); }
+  else showAccount();
+}
+function goBack() {
+  if (currentDomain > 0) { currentDomain--; renderDomain(currentDomain); }
+}
+function showAccount() {
+  document.getElementById('surveyScreen').style.display = 'none';
+  document.getElementById('accountScreen').classList.add('visible');
+  window.scrollTo(0,0);
+}
+function goBackToSurvey() {
+  document.getElementById('accountScreen').classList.remove('visible');
+  document.getElementById('surveyScreen').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+async function submitAssessment() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('emailInput').value.trim();
+  const sport = document.getElementById('sportInput').value.trim();
+  const level = document.getElementById('levelInput').value;
+  const password = document.getElementById('passwordInput').value;
+  const confirmPw = document.getElementById('confirmPassword').value;
+  const agreed = document.getElementById('agreeTerms').checked;
+
+  document.getElementById('emailError').classList.remove('show');
+  document.getElementById('pwError').classList.remove('show');
+
+  if (!firstName || !lastName || !email || !sport || !level || !password) {
+    K3B.notify.show('Please fill in all required fields', 'error'); return;
+  }
+  if (password !== confirmPw) {
+    document.getElementById('pwError').classList.add('show'); return;
+  }
+  if (password.length < 8) {
+    K3B.notify.show('Password must be at least 8 characters', 'error'); return;
+  }
+  if (!agreed) {
+    K3B.notify.show('Please agree to the terms to continue', 'error'); return;
+  }
+  if (K3B.athletes.getByEmail(email)) {
+    document.getElementById('emailError').classList.add('show'); return;
+  }
+
+  const scores = K3B.scoring.compute(answers);
+
+  document.getElementById('accountScreen').classList.remove('visible');
+  document.getElementById('resultsScreen').classList.add('visible');
+  document.getElementById('loadingState').style.display = 'block';
+  document.getElementById('resultContent').style.display = 'none';
+  window.scrollTo(0,0);
+
+  let aiResult = null;
+  try {
+    aiResult = await K3B.ai.evaluate({ firstName, lastName, sport, level, answers, scores });
+  } catch(e) {
+    aiResult = {
+      recommendation: 'REVIEW',
+      headline: 'Assessment Received',
+      overallVerdict: 'Your assessment has been submitted successfully. The K3B team will personally review your full profile within 48 hours.',
+      physicalSummary: 'Your physical health profile has been recorded.',
+      psychSummary: 'Your psychological wellbeing has been recorded.',
+      socialSummary: 'Your social profile has been recorded.',
+      envSummary: 'Your environment profile has been recorded.',
+      topStrength: 'Profile submitted for review.',
+      keyOpportunity: 'K3B team review pending.',
+      redFlags: [],
+      athleteMessage: 'Thank you for completing the K3B assessment. Our team will review your results personally and be in touch within 48 hours.'
+    };
+  }
+
+  const athlete = K3B.athletes.create({
+    firstName, lastName, email,
+    sport, level, password,
+    answers, scores,
+    aiEvaluation: aiResult
+  });
+  currentAthleteId = athlete.id;
+  K3B.auth.loginAthlete({ id: athlete.id, firstName, lastName, email, sport, level });
+
+  showResults(scores, aiResult);
+}
+
+function showResults(scores, result) {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('resultContent').style.display = 'block';
+
+  document.getElementById('resultHeadline').textContent = result.headline;
+
+  const badgeMap = {
+    REVIEW: ['Under Review', 'badge-success'],
+    MONITOR: ['Monitoring', 'badge-warning'],
+    PASS: ['Not a Fit', 'badge-danger']
+  };
+  const [label, cls] = badgeMap[result.recommendation] || badgeMap.REVIEW;
+  document.getElementById('resultBadge').innerHTML = `<span class="badge ${cls}">${label}</span>`;
+
+  const domDefs = [
+    { key:'physical', label:'Physical Health' },
+    { key:'psychological', label:'Psychological' },
+    { key:'social', label:'Social Relations' },
+    { key:'environment', label:'Environment' }
+  ];
+  const grid = document.getElementById('domainScoresGrid');
+  grid.innerHTML = '';
+  domDefs.forEach(d => {
+    const sc = scores[d.key];
+    const color = K3B.fmt.scoreColor(sc);
+    grid.innerHTML += `<div class="ds-item">
+      <div class="ds-label">${d.label}</div>
+      <div class="ds-bar"><div class="ds-fill" id="fill_${d.key}" style="width:0%; background:${color}"></div></div>
+      <div class="ds-val" style="color:${color}">${sc}</div>
+    </div>`;
+  });
+  setTimeout(() => {
+    domDefs.forEach(d => {
+      const el = document.getElementById('fill_'+d.key);
+      if (el) el.style.width = scores[d.key] + '%';
+    });
+  }, 100);
+
+  document.getElementById('athleteMsg').textContent = result.athleteMessage;
+  document.getElementById('overallVerdict').textContent = result.overallVerdict;
+  document.getElementById('topStrength').textContent = result.topStrength;
+  document.getElementById('keyOpportunity').textContent = result.keyOpportunity;
+
+  if (result.redFlags && result.redFlags.length > 0) {
+    document.getElementById('redFlagsSection').style.display = 'block';
+    const ul = document.getElementById('redFlagsList');
+    ul.innerHTML = result.redFlags.map(f => `<li>${f}</li>`).join('');
+  }
+}
+
+renderDomain(0);
+</script>
+</body>
+</html>
