@@ -6,84 +6,43 @@
   <title>Services — K3B Sports Management</title>
   <link rel="stylesheet" href="/css/global.css">
   <style>
+    :root { --gold: #8B6914; --gold-light: #A07D1C; --gold-pale: #C4A44A; --border-gold: rgba(139,105,20,0.25); --gold-dim: rgba(139,105,20,0.1); }
     .services-hero { padding: 96px 0 80px; }
     .services-hero h1 { font-family:var(--font-display); font-size:clamp(56px,8vw,100px); letter-spacing:2px; line-height:0.9; }
     .services-hero h1 em { color:var(--gold); font-style:normal; }
-    .service-row {
-      display:grid; grid-template-columns:1fr 1fr; gap:0;
-      border:1px solid var(--border-gold); margin-bottom:20px;
-    }
+    .service-row { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--border-gold); margin-bottom:20px; }
     .service-content { padding:56px 48px; }
-    .service-visual {
-      background:var(--dark); border-left:1px solid var(--border-gold);
-      display:flex; align-items:center; justify-content:center;
-      padding:48px;
-    }
-    .service-big-num {
-      font-family:var(--font-display); font-size:120px;
-      color:rgba(184,151,58,0.1); line-height:1;
-    }
-    .service-title {
-      font-family:var(--font-display); font-size:40px; letter-spacing:2px;
-      color:var(--text); margin-bottom:16px;
-    }
-    .service-desc {
-      font-size:14px; font-weight:300; color:var(--text-muted);
-      line-height:1.8; margin-bottom:28px;
-    }
+    .service-visual { background:var(--dark); border-left:1px solid var(--border-gold); display:flex; align-items:center; justify-content:center; padding:48px; }
+    .service-big-num { font-family:var(--font-display); font-size:120px; color:rgba(139,105,20,0.1); line-height:1; }
+    .service-title { font-family:var(--font-display); font-size:40px; letter-spacing:2px; color:var(--text); margin-bottom:16px; }
+    .service-desc { font-size:14px; font-weight:300; color:var(--text-muted); line-height:1.8; margin-bottom:28px; }
     .feature-list { list-style:none; margin-bottom:28px; }
-    .feature-list li {
-      display:flex; align-items:flex-start; gap:12px;
-      font-size:13px; color:var(--text-muted); padding:8px 0;
-      border-bottom:1px solid rgba(255,255,255,0.04); font-weight:300;
-    }
+    .feature-list li { display:flex; align-items:flex-start; gap:12px; font-size:13px; color:var(--text-muted); padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-weight:300; }
     .feature-list li:last-child { border-bottom:none; }
-    .feature-list li::before { content:'→'; color:var(--gold); font-size:11px; margin-top:2px; flex-shrink:0; }
-    .pricing-note {
-      font-size:12px; color:var(--text-dim); letter-spacing:1px;
-      text-transform:uppercase; margin-top:8px;
-    }
-    .process-timeline {
-      display:flex; flex-direction:column; gap:0;
-      border:1px solid var(--border-gold); margin-top:64px;
-    }
-    .timeline-row {
-      display:grid; grid-template-columns:80px 1fr;
-      border-bottom:1px solid rgba(184,151,58,0.08);
-      padding:32px 36px 32px 0;
-    }
+    .feature-list li::before { content:''; width:5px; height:5px; background:var(--gold); flex-shrink:0; margin-top:6px; }
+    .pricing-note { font-size:12px; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin-top:8px; }
+    .process-timeline { display:flex; flex-direction:column; gap:0; border:1px solid var(--border-gold); margin-top:64px; }
+    .timeline-row { display:grid; grid-template-columns:80px 1fr; border-bottom:1px solid rgba(139,105,20,0.08); padding:32px 36px 32px 0; }
     .timeline-row:last-child { border-bottom:none; }
-    .timeline-num {
-      font-family:var(--font-display); font-size:48px;
-      color:rgba(184,151,58,0.2); line-height:1; padding-left:36px;
-    }
-    .timeline-content-title {
-      font-size:13px; font-weight:600; letter-spacing:2px;
-      text-transform:uppercase; color:var(--text); margin-bottom:8px;
-    }
-    .timeline-content-desc {
-      font-size:13px; font-weight:300; color:var(--text-muted); line-height:1.7;
-    }
-    .cta-row {
-      background:var(--dark); border:1px solid var(--border-gold);
-      padding:56px 48px; margin-top:64px;
-      display:flex; align-items:center; justify-content:space-between;
-      position:relative;
-    }
-    .cta-row::before {
-      content:''; position:absolute; top:0; left:0;
-      width:64px; height:3px; background:var(--gold);
-    }
+    .timeline-num { font-family:var(--font-display); font-size:48px; color:rgba(139,105,20,0.2); line-height:1; padding-left:36px; }
+    .timeline-content-title { font-size:13px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--text); margin-bottom:8px; }
+    .timeline-content-desc { font-size:13px; font-weight:300; color:var(--text-muted); line-height:1.7; }
+    .cta-row { background:var(--dark); border:1px solid var(--border-gold); padding:56px 48px; margin-top:64px; display:flex; align-items:center; justify-content:space-between; position:relative; }
+    .cta-row::before { content:''; position:absolute; top:0; left:0; width:64px; height:3px; background:var(--gold); }
   </style>
 </head>
 <body>
+
 <nav class="nav">
-  <a href="/index.html" class="nav-logo"><div class="nav-logo-mark">K3B</div>K3B SPORTS</a>
+  <a href="/index.html" class="nav-logo">
+    <img src="/K3B LOGO OFFICIAL.png" alt="K3B Sports" style="height:38px; width:auto;">
+  </a>
   <div class="nav-links">
     <a href="/index.html">Home</a>
     <a href="/pages/services.html" class="active">Services</a>
     <a href="/pages/assessment.html">Assessment</a>
     <a href="/pages/about.html">About</a>
+    <a href="/pages/contact.html">Contact</a>
   </div>
   <div class="nav-actions" id="navActions">
     <a href="/athlete/login.html" class="btn btn-outline btn-sm">Sign In</a>
@@ -102,20 +61,21 @@
 
 <section class="section">
   <div class="container">
+
     <div class="service-row">
       <div class="service-content">
         <div class="section-tag">Service 01</div>
-        <div class="service-title">Athlete<br>Assessment</div>
-        <p class="service-desc">Our free, WHO-validated 26-point quality of life assessment is the entry point for every K3B athlete. It evaluates four domains of your life — physical, psychological, social, and environmental — and gives us a complete picture of where you are today.</p>
+        <div class="service-title">360° Athlete<br>Evaluation</div>
+        <p class="service-desc">Our free, confidential 26-point quality of life assessment is the entry point for every K3B athlete. It evaluates five expert areas of your life and gives us a complete picture of where you are today and where we can help most.</p>
         <ul class="feature-list">
-          <li>26 clinically validated questions</li>
-          <li>Four-domain evaluation framework</li>
-          <li>AI-powered analysis and scoring</li>
-          <li>Personal review by the K3B team</li>
-          <li>Results available in your athlete portal</li>
+          <li>Confidential and fully secure intake process</li>
+          <li>Five expert evaluation areas covered</li>
+          <li>AI-powered analysis and domain scoring</li>
+          <li>Personal review by the K3B team within 48 hours</li>
+          <li>Results available in your private athlete portal</li>
         </ul>
-        <a href="/pages/assessment.html" class="btn btn-gold">Take Free Assessment →</a>
-        <p class="pricing-note">Always free · No commitment</p>
+        <a href="/pages/assessment.html" class="btn btn-gold">Take Free Assessment</a>
+        <p class="pricing-note">Always free · No commitment required</p>
       </div>
       <div class="service-visual"><div class="service-big-num">01</div></div>
     </div>
@@ -126,16 +86,16 @@
       </div>
       <div class="service-content">
         <div class="section-tag">Service 02</div>
-        <div class="service-title">Consultation<br>& Strategy</div>
+        <div class="service-title">Consultation<br>and Strategy</div>
         <p class="service-desc">Accepted athletes receive a comprehensive consultation session where we review your results in detail, align on your goals, and build a strategic roadmap for your career and life. This is where the K3B partnership begins.</p>
         <ul class="feature-list">
-          <li>45–60 minute initial consultation</li>
-          <li>Full assessment review with the K3B team</li>
+          <li>45 to 60 minute initial consultation session</li>
+          <li>Full 360° assessment review with the K3B team</li>
           <li>Custom career and life strategy roadmap</li>
           <li>Priority area identification and action plan</li>
           <li>Ongoing availability between sessions</li>
         </ul>
-        <a href="/pages/assessment.html" class="btn btn-ghost">Apply via Assessment →</a>
+        <a href="/pages/assessment.html" class="btn btn-ghost">Apply via Assessment</a>
         <p class="pricing-note">Custom-quoted per athlete</p>
       </div>
     </div>
@@ -144,15 +104,15 @@
       <div class="service-content">
         <div class="section-tag">Service 03</div>
         <div class="service-title">Career-Long<br>Partnership</div>
-        <p class="service-desc">Our premium engagement model. K3B becomes your team behind the scenes — advising on major decisions, managing external relationships, supporting you through transitions, and building the infrastructure for life after sport.</p>
+        <p class="service-desc">Our premium engagement model. K3B becomes your team behind the scenes, advising on major decisions, managing external relationships, supporting you through transitions, and building the infrastructure for life after sport.</p>
         <ul class="feature-list">
           <li>Ongoing strategic advisory access</li>
-          <li>External relationship management</li>
-          <li>Career transition planning and support</li>
-          <li>Post-sport life and financial guidance</li>
+          <li>Legal and financial relationship management</li>
+          <li>Public image and brand strategy support</li>
+          <li>Career transition planning and post-sport preparation</li>
           <li>Full team dedication to your long-term success</li>
         </ul>
-        <a href="/pages/assessment.html" class="btn btn-gold">Start with Assessment →</a>
+        <a href="/pages/assessment.html" class="btn btn-gold">Start with Assessment</a>
         <p class="pricing-note">Invitation only · Custom engagement</p>
       </div>
       <div class="service-visual"><div class="service-big-num">03</div></div>
@@ -160,14 +120,14 @@
 
     <div class="section-tag" style="margin-top:80px;">Pricing</div>
     <h2 class="section-title">Custom-Quoted,<br>Always.</h2>
-    <p class="section-desc" style="max-width:600px;">We don't offer package pricing because every athlete is different. After your assessment and consultation, we build a custom engagement proposal based on exactly what you need and what K3B can deliver. The assessment is always free.</p>
+    <p class="section-desc" style="max-width:600px;">We do not offer package pricing because every athlete is different. After your assessment and consultation, we build a custom engagement proposal based exactly on what you need and what K3B can deliver. The assessment is always free.</p>
 
     <div class="process-timeline">
       <div class="timeline-row">
         <div class="timeline-num">01</div>
         <div>
           <div class="timeline-content-title">Free Assessment</div>
-          <p class="timeline-content-desc">Complete the 26-question evaluation. No cost, no commitment. This is how every K3B relationship begins.</p>
+          <p class="timeline-content-desc">Complete the confidential evaluation. No cost, no commitment. This is how every K3B relationship begins.</p>
         </div>
       </div>
       <div class="timeline-row">
@@ -199,23 +159,22 @@
         <h3 style="font-family:var(--font-display); font-size:40px; letter-spacing:2px; margin-bottom:8px;">Start with the Assessment</h3>
         <p style="font-size:13px; color:var(--text-muted);">Free. 10 minutes. The first step toward knowing if K3B is right for you.</p>
       </div>
-      <a href="/pages/assessment.html" class="btn btn-gold btn-lg">Take Assessment →</a>
+      <a href="/pages/assessment.html" class="btn btn-gold btn-lg">Take Assessment</a>
     </div>
+
   </div>
 </section>
 
 <footer style="background:var(--dark); padding:40px 48px; border-top:1px solid var(--border-gold); display:flex; justify-content:space-between; align-items:center;">
-  <a href="/index.html" style="font-family:var(--font-display); font-size:20px; letter-spacing:4px; color:var(--gold);">K3B Sports</a>
-  <span style="font-size:11px; color:var(--text-dim);">© 2026 K3B Sports Management, LLC</span>
+  <a href="/index.html"><img src="/K3B LOGO OFFICIAL.png" alt="K3B Sports" style="height:36px; width:auto;"></a>
+  <span style="font-size:11px; color:var(--text-dim);">2026 K3B Sports Management, LLC</span>
 </footer>
 
 <script src="/js/k3b.js"></script>
 <script>
   const user = K3B.auth.getUser();
   if (user) {
-    document.getElementById('navActions').innerHTML = `
-      <a href="/athlete/portal.html" class="btn btn-outline btn-sm">My Portal</a>
-    `;
+    document.getElementById('navActions').innerHTML = `<a href="/athlete/portal.html" class="btn btn-outline btn-sm">My Portal</a>`;
   }
 </script>
 </body>
