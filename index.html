@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="/css/global.css">
   <style>
     :root { --gold: #8B6914; --gold-light: #A07D1C; --gold-pale: #C4A44A; --border-gold: rgba(139,105,20,0.25); --gold-dim: rgba(139,105,20,0.1); }
-    .hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 48px; position: relative; overflow: hidden; }
+    .hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; padding: 0 48px; position: relative; overflow: hidden; }
     .hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 14px; margin-bottom: 28px; animation: fadeUp 0.6s ease 0.1s both; }
     .hero-eyebrow span { display: block; width: 40px; height: 1px; background: var(--gold); }
     .hero-h1 { font-family: var(--font-display); font-size: clamp(72px, 10vw, 132px); line-height: 0.88; letter-spacing: 2px; color: var(--text); max-width: 900px; animation: fadeUp 0.6s ease 0.2s both; }
     .hero-h1 em { color: var(--gold); font-style: normal; }
-    .hero-sub { font-size: 15px; font-weight: 300; color: var(--text-muted); max-width: 560px; line-height: 1.8; margin: 28px auto 52px; animation: fadeUp 0.6s ease 0.3s both; }
-    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 20px; animation: fadeUp 0.6s ease 0.4s both; }
-    .hero-stats { display: flex; gap: 56px; margin-top: 80px; padding-top: 44px; border-top: 1px solid rgba(255,255,255,0.06); animation: fadeUp 0.6s ease 0.5s both; justify-content: center; }
+    .hero-sub { font-size: 15px; font-weight: 300; color: var(--text-muted); max-width: 480px; line-height: 1.8; margin: 28px 0 52px; animation: fadeUp 0.6s ease 0.3s both; }
+    .hero-actions { display: flex; align-items: center; gap: 20px; animation: fadeUp 0.6s ease 0.4s both; }
+    .hero-stats { display: flex; gap: 56px; margin-top: 80px; padding-top: 44px; border-top: 1px solid rgba(255,255,255,0.06); animation: fadeUp 0.6s ease 0.5s both; }
     .stat-val { font-family: var(--font-display); font-size: 44px; letter-spacing: 2px; color: var(--gold); display: block; line-height: 1; }
     .stat-lbl { font-size: 10px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; display: block; }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border-gold); margin-top: 64px; }
@@ -85,18 +85,20 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-eyebrow"><span></span>Elite Athlete Management<span></span></div>
-  <h1 class="hero-h1">Your Team<br>Behind the<br><em>Scenes.</em></h1>
-  <p class="hero-sub">K3B Sports Management delivers a confidential 360-degree evaluation and ongoing support system for elite athletes. We address the full spectrum of challenges impacting performance and wellbeing.</p>
-  <div class="hero-actions">
-    <a href="/pages/assessment.html" class="btn btn-gold btn-lg">Start Free Assessment</a>
-    <a href="/pages/services.html" class="btn btn-outline btn-lg">Our Services</a>
-  </div>
-  <div class="hero-stats">
-    <div><span class="stat-val">360°</span><span class="stat-lbl">Evaluation</span></div>
-    <div><span class="stat-val">5</span><span class="stat-lbl">Expert Areas</span></div>
-    <div><span class="stat-val">AI</span><span class="stat-lbl">Powered Review</span></div>
-    <div><span class="stat-val">FREE</span><span class="stat-lbl">To Apply</span></div>
+  <div class="container" style="width:100%;">
+    <div class="hero-eyebrow"><span></span>Elite Athlete Management</div>
+    <h1 class="hero-h1">Your Team<br>Behind the<br><em>Scenes.</em></h1>
+    <p class="hero-sub">K3B Sports Management delivers a confidential 360-degree evaluation and ongoing support system for elite athletes. We address the full spectrum of challenges impacting performance and wellbeing.</p>
+    <div class="hero-actions">
+      <a href="/pages/assessment.html" class="btn btn-gold btn-lg">Start Free Assessment</a>
+      <a href="/pages/services.html" class="btn btn-outline btn-lg">Our Services</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-val">360°</span><span class="stat-lbl">Evaluation</span></div>
+      <div><span class="stat-val">5</span><span class="stat-lbl">Expert Areas</span></div>
+      <div><span class="stat-val">AI</span><span class="stat-lbl">Powered Review</span></div>
+      <div><span class="stat-val">FREE</span><span class="stat-lbl">To Apply</span></div>
+    </div>
   </div>
 </section>
 
