@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — K3B Sports Management</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <style>
+    :root { --gold: #8B6914; --gold-light: #A07D1C; --gold-pale: #C4A44A; --border-gold: rgba(139,105,20,0.25); --gold-dim: rgba(139,105,20,0.1); }
+    .about-hero { padding: 96px 0 80px; }
+    .about-hero h1 { font-family:var(--font-display); font-size:clamp(56px,8vw,100px); letter-spacing:2px; line-height:0.9; }
+    .about-hero h1 em { color:var(--gold); font-style:normal; }
+    .about-intro { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-top:80px; }
+    .intro-text { font-size:15px; font-weight:300; color:var(--text-muted); line-height:1.9; }
+    .intro-text p { margin-bottom:20px; }
+    .intro-stat-block { background:var(--dark); border:1px solid var(--border-gold); padding:48px 40px; position:relative; }
+    .intro-stat-block::before { content:''; position:absolute; top:0; left:0; width:48px; height:3px; background:var(--gold); }
+    .stat-row { padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .stat-row:last-child { border-bottom:none; }
+    .stat-row-val { font-family:var(--font-display); font-size:40px; letter-spacing:2px; color:var(--gold); line-height:1; }
+    .stat-row-lbl { font-size:11px; font-weight:300; color:var(--text-muted); margin-top:4px; }
+    .areas-section { background:var(--dark); border-top:1px solid var(--border-gold); border-bottom:1px solid var(--border-gold); }
+    .areas-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:64px; border:1px solid var(--border-gold); }
+    .area-card { padding:40px 28px; border-right:1px solid rgba(139,105,20,0.1); }
+    .area-card:last-child { border-right:none; }
+    .area-num { font-family:var(--font-display); font-size:40px; color:rgba(139,105,20,0.15); line-height:1; margin-bottom:20px; }
+    .area-title { font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--text); margin-bottom:12px; }
+    .area-desc { font-size:12px; font-weight:300; color:var(--text-muted); line-height:1.7; }
+    .mission-section { padding:96px 0; }
+    .mission-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .mission-quote { font-family:var(--font-display); font-size:clamp(28px,4vw,44px); letter-spacing:2px; color:var(--text); line-height:1.1; }
+    .mission-quote em { color:var(--gold); font-style:normal; }
+    .mission-body { font-size:14px; font-weight:300; color:var(--text-muted); line-height:1.9; }
+    .mission-body p { margin-bottom:16px; }
+    .confidential-banner { background:var(--gold); padding:56px 48px; }
+    .conf-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .conf-title { font-family:var(--font-display); font-size:40px; letter-spacing:2px; color:var(--black); line-height:1; margin-bottom:12px; }
+    .conf-desc { font-size:14px; font-weight:300; color:rgba(0,0,0,0.65); line-height:1.75; }
+    .conf-items { display:flex; flex-direction:column; gap:12px; }
+    .conf-item { display:flex; align-items:center; gap:12px; font-size:13px; font-weight:500; color:var(--black); }
+    .conf-item::before { content:''; width:6px; height:6px; background:var(--black); flex-shrink:0; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/index.html" class="nav-logo">
+    <img src="/K3B LOGO OFFICIAL.png" alt="K3B Sports" style="height:38px; width:auto;">
+  </a>
+  <div class="nav-links">
+    <a href="/index.html">Home</a>
+    <a href="/pages/services.html">Services</a>
+    <a href="/pages/assessment.html">Assessment</a>
+    <a href="/pages/about.html" class="active">About</a>
+    <a href="/pages/contact.html">Contact</a>
+  </div>
+  <div class="nav-actions" id="navActions">
+    <a href="/athlete/login.html" class="btn btn-outline btn-sm">Sign In</a>
+    <a href="/pages/assessment.html" class="btn btn-gold btn-sm">Take Assessment</a>
+  </div>
+</nav>
+
+<section class="about-hero">
+  <div class="container">
+    <div class="section-tag">About K3B</div>
+    <h1>Empowering<br>the <em>Whole</em><br>Athlete.</h1>
+  </div>
+</section>
+
+<div class="divider-gold"></div>
+
+<section class="section">
+  <div class="container">
+    <div class="about-intro">
+      <div class="intro-text">
+        <p>K3B Sports Management was built on a simple belief: elite athletes deserve more than contract negotiations and highlight reels. They deserve a team that understands the full complexity of their lives and is equipped to support every dimension of it.</p>
+        <p>Athletes today face unprecedented pressure. The demands of performance, media scrutiny, financial complexity, and the inevitable transition out of sport create challenges that most management companies are simply not built to address.</p>
+        <p>K3B is different. Our 360-degree evaluation model brings together a trusted network of domain experts spanning mental health, physical wellness, legal and financial advisory, public image strategy, and lifestyle planning. We do not offer one-size-fits-all packages. Every engagement is custom-built around the individual athlete.</p>
+        <p>We are selective by design. We take on athletes we can truly impact, and when we do, we go all in.</p>
+        <a href="/pages/assessment.html" class="btn btn-gold" style="margin-top:12px;">Start Your Evaluation</a>
+      </div>
+      <div class="intro-stat-block">
+        <div class="stat-row">
+          <div class="stat-row-val">360°</div>
+          <div class="stat-row-lbl">Whole-athlete evaluation model</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-row-val">5</div>
+          <div class="stat-row-lbl">Expert evaluation areas</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-row-val">48h</div>
+          <div class="stat-row-lbl">Personal review turnaround</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-row-val">100%</div>
+          <div class="stat-row-lbl">Confidential and private</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section areas-section">
+  <div class="container">
+    <div class="section-tag">Expert Areas</div>
+    <h2 class="section-title">What We<br>Evaluate</h2>
+    <p class="section-desc">Our evaluation spans five distinct expert areas, each conducted by professionals who specialize in working with elite athletes.</p>
+    <div class="areas-grid">
+      <div class="area-card">
+        <div class="area-num">01</div>
+        <div class="area-title">Mental Health</div>
+        <p class="area-desc">One-on-one assessments with licensed professionals specializing in athlete psychology, performance mindset, and emotional wellbeing.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-num">02</div>
+        <div class="area-title">Physical Wellness</div>
+        <p class="area-desc">Sleep quality, nutrition, recovery protocols, and injury prevention audits tailored to the demands of elite sport.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-num">03</div>
+        <div class="area-title">Legal &amp; Financial</div>
+        <p class="area-desc">Contract review, wealth management strategy, liability exposure analysis, and long-term financial planning for athletes.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-num">04</div>
+        <div class="area-title">Public Image</div>
+        <p class="area-desc">Brand positioning, media posture, social media footprint analysis, and reputation management for athletes in the public eye.</p>
+      </div>
+      <div class="area-card">
+        <div class="area-num">05</div>
+        <div class="area-title">Lifestyle Planning</div>
+        <p class="area-desc">Post-career preparation, community engagement strategy, personal development planning, and life transition support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mission-section">
+  <div class="container">
+    <div class="mission-inner">
+      <div>
+        <div class="section-tag">Our Mission</div>
+        <div class="mission-quote">Helping athletes <em>perform at their best</em> on and off the field.</div>
+      </div>
+      <div class="mission-body">
+        <p>The 360-degree evaluation identifies unseen risks and opportunities that most athletes and their teams miss entirely. Financial exposure before it becomes a crisis. Mental health challenges before they impact performance. Brand vulnerabilities before they become headlines.</p>
+        <p>Beyond identifying problems, K3B is built to solve them. Our network of domain experts does not just evaluate, they advise, support, and stay engaged throughout the athlete's career and beyond.</p>
+        <p>Every finding and recommendation is confidential. Shared only with the athlete and approved representatives. K3B complies with the highest standards of medical and professional ethics.</p>
+        <a href="/pages/contact.html" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="confidential-banner">
+  <div class="container">
+    <div class="conf-inner">
+      <div>
+        <div class="conf-title">Confidentiality Guaranteed</div>
+        <p class="conf-desc">All findings, assessments, and recommendations are private and protected. We hold ourselves to the highest standards of professional and medical ethics.</p>
+      </div>
+      <div class="conf-items">
+        <div class="conf-item">All findings shared only with the athlete</div>
+        <div class="conf-item">Approved representatives only with athlete consent</div>
+        <div class="conf-item">Compliant with medical and professional ethics standards</div>
+        <div class="conf-item">Secure onboarding and data handling</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="background:var(--dark); padding:40px 48px; border-top:1px solid var(--border-gold); display:flex; justify-content:space-between; align-items:center;">
+  <a href="/index.html"><img src="/K3B LOGO OFFICIAL.png" alt="K3B Sports" style="height:36px; width:auto;"></a>
+  <span style="font-size:11px; color:var(--text-dim);">2026 K3B Sports Management, LLC</span>
+</footer>
+
+<script src="/js/k3b.js"></script>
+<script>
+  const user = K3B.auth.getUser();
+  if (user) {
+    document.getElementById('navActions').innerHTML = `<a href="/athlete/portal.html" class="btn btn-outline btn-sm">My Portal</a>`;
+  }
+</script>
+</body>
+</html>
