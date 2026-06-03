@@ -24,17 +24,20 @@
     .service-card { padding: 44px 36px; border-right: 1px solid rgba(139,105,20,0.1); transition: background var(--transition); }
     .service-card:last-child { border-right: none; }
     .service-card:hover { background: var(--dark2); }
-    .svc-num { font-family: var(--font-display); font-size: 52px; color: rgba(139,105,20,0.12); line-height: 1; margin-bottom: 24px; }
+    .svc-icon { font-size: 28px; margin-bottom: 24px; display: block; }
     .svc-title { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 14px; }
     .svc-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.75; }
     .svc-link { display: inline-block; margin-top: 24px; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
     .process-section { background: var(--dark); }
     .process-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
-    .process-step { display: flex; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .process-step:last-child { border-bottom: none; }
-    .ps-num { font-family: var(--font-display); font-size: 36px; color: rgba(139,105,20,0.2); line-height: 1; min-width: 44px; padding-top: 2px; }
-    .ps-title { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
-    .ps-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+    .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 48px; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--gold), rgba(139,105,20,0.1)); }
+    .timeline-step { display: flex; gap: 24px; padding: 0 0 36px 0; position: relative; }
+    .timeline-step:last-child { padding-bottom: 0; }
+    .timeline-dot { width: 9px; height: 9px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 5px; position: relative; z-index: 1; margin-left: -4px; }
+    .timeline-stage { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .timeline-title { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text); margin-bottom: 6px; }
+    .timeline-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
     .assess-card { background: var(--black); border: 1px solid var(--border-gold); padding: 48px 40px; position: relative; }
     .assess-card::before { content: ''; position: absolute; top: 0; left: 0; width: 56px; height: 3px; background: var(--gold); }
     .eval-areas { display: flex; flex-direction: column; gap: 10px; margin: 28px 0 36px; }
@@ -116,21 +119,21 @@
     <p class="section-desc">K3B is selective by design. We take on athletes we can truly impact and go all in for them across every area of their career and life.</p>
     <div class="services-grid">
       <div class="service-card">
-        <div class="svc-num">01</div>
+        <span class="svc-icon">◈</span>
         <div class="svc-title">360° Evaluation</div>
         <p class="svc-desc">A confidential, player-centric assessment covering mental health, physical wellness, legal and financial exposure, public image, and lifestyle planning. Conducted by a trusted network of domain experts.</p>
         <a href="/pages/assessment.html" class="svc-link">Take Assessment</a>
       </div>
       <div class="service-card">
-        <div class="svc-num">02</div>
+        <span class="svc-icon">⬡</span>
         <div class="svc-title">AI-Powered Review</div>
         <p class="svc-desc">Your assessment responses are evaluated by our AI engine, which identifies unseen risks and opportunities across every area of your life. The K3B team then reviews your full profile personally.</p>
         <a href="/pages/services.html" class="svc-link">Learn More</a>
       </div>
       <div class="service-card">
-        <div class="svc-num">03</div>
+        <span class="svc-icon">△</span>
         <div class="svc-title">Premium Partnership</div>
-        <p class="svc-desc">Accepted athletes receive a personalized report, advisory sessions, and a custom engagement plan built around their specific situation and goals. No off-the-shelf packages.</p>
+        <p class="svc-desc">Accepted athletes receive a personal invitation to consult directly with the K3B team. From there, we build a custom engagement plan around your specific goals and needs.</p>
         <a href="/pages/services.html" class="svc-link">View Services</a>
       </div>
     </div>
@@ -145,23 +148,39 @@
       <div>
         <div class="section-tag">The Process</div>
         <h2 class="section-title">How It<br>Works</h2>
-        <p class="section-desc">From assessment to personalized report in 7 to 10 days. Confidential, merit-based, and personal at every step.</p>
-        <div style="margin-top:48px;">
-          <div class="process-step">
-            <div class="ps-num">01</div>
-            <div><div class="ps-title">Free Assessment</div><p class="ps-desc">Complete our confidential quality of life evaluation covering five expert areas. Free, takes about 10 minutes, and fully secure.</p></div>
+        <p class="section-desc">From assessment to consultation in under 48 hours. Confidential, merit-based, and personal at every step.</p>
+        <div class="timeline">
+          <div class="timeline-step">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-stage">Apply</div>
+              <div class="timeline-title">Free Assessment</div>
+              <p class="timeline-desc">Complete our confidential evaluation covering five expert areas. Free, takes about 10 minutes, and fully secure.</p>
+            </div>
           </div>
-          <div class="process-step">
-            <div class="ps-num">02</div>
-            <div><div class="ps-title">Create Your Account</div><p class="ps-desc">After the assessment, create your athlete account to track your application status and receive updates from the K3B team.</p></div>
+          <div class="timeline-step">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-stage">Review</div>
+              <div class="timeline-title">K3B Personal Review</div>
+              <p class="timeline-desc">Our AI flags key areas of risk and opportunity. The K3B team then reviews your full profile personally within 48 hours.</p>
+            </div>
           </div>
-          <div class="process-step">
-            <div class="ps-num">03</div>
-            <div><div class="ps-title">K3B Review</div><p class="ps-desc">Our AI evaluates your responses and flags key areas of risk and opportunity. The K3B team then reviews your full profile personally within 48 hours.</p></div>
+          <div class="timeline-step">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-stage">Accept</div>
+              <div class="timeline-title">Invitation to Consult</div>
+              <p class="timeline-desc">Accepted athletes receive a personal invitation to connect directly with the K3B team for a discovery consultation.</p>
+            </div>
           </div>
-          <div class="process-step">
-            <div class="ps-num">04</div>
-            <div><div class="ps-title">Personalized Report</div><p class="ps-desc">Accepted athletes receive a comprehensive summary and recommendations within 7 to 10 days, followed by optional advisory sessions and a custom engagement plan.</p></div>
+          <div class="timeline-step">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-stage">Build</div>
+              <div class="timeline-title">Custom Engagement Plan</div>
+              <p class="timeline-desc">We build a custom engagement plan around your specific goals, needs, and the areas where K3B can deliver the most impact.</p>
+            </div>
           </div>
         </div>
       </div>
